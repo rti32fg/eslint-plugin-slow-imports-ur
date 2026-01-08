@@ -165,12 +165,13 @@ _tarfile="${_tarname}.${_archive_format}"
 if [[ "${_offline}" == "true" ]]; then
   _url="file://${HOME}/${pkgname}"
 fi
-_bundle_sum="07e61eefafa3c68fe079596b407592d6992eb1f857746b4d876e0dd8b9df0335"
-_bundle_sig_sum="065c0209a161d7f9a4000b512cc2aa35683e086986fc82dd0649a98ee27b6597"
-_gitlab_sum="be36bae17e6879582057a5cead30e9fb90d701f99e2b5db1e32b27ca1e51054f"
-_gitlab_sig_sum="69ef172a077d5a0dcbac8083836417b0f2221b1a8e1607deac063b51a1599366"
-_github_sum='0319169b62cfd5d7dd8a453f4ad8632c4dfea56eb308b70164163d9243736ec6'
-_github_sig_sum="3ff957722ef127b40560d53ad39afdfdde0e87091ace2ec8c7cf41db36e7923a"
+_bundle_sum="b7e5988a5bf28240899792ebbb3ea973fb612aac34efd462a4d6e039445acca0"
+_bundle_sig_sum="42c081847580878ff0cbd97da805d13f798c1c6ca18cdab963c08b413d5403a1"
+_gitlab_sum="34af024d90872f31af6838f8158967f52b1d97aef2e2399a8cb0e3f2bf3a6a0e"
+
+_gitlab_sig_sum="9b251ba0ab6df1452a6f5ffbd0ccd660c2ea2a7ace9f27f577234ee80fc08f4b"
+_github_sum="d7852de761d085e07c8d2fafe8b22a7cb07e56b7bdca5ad5207d2894e29a2032"
+_github_sig_sum="67a25e9f68e96c834d1faff75633400e9c2f47092c099b944032d8dd3fc24d9a"
 if [[ "${_git_service}" == "github" ]]; then
   _evmfs_sum="${_github_sum}"
   _evmfs_sig_sum="${_github_sig_sum}"
