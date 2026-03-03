@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0
 
 #    ----------------------------------------------------------------------
-#    Copyright © 2022, 2023, 2024, 2025  Pellegrino Prevete
+#    Copyright © 2022, 2023, 2024, 2025, 2026  Pellegrino Prevete
 #
 #    All rights reserved
 #    ----------------------------------------------------------------------
@@ -138,7 +138,9 @@ _requirements() {
   local \
     _fur_mini_opts=() \
     _fur_opts=() \
-    _pkgname
+    _pkgname \
+    _fur_release_latest \
+    _reallymakepkg_release_latest
   _pkgname="${pkg%-ur}"
   _fur_mini_opts+=(
     "${platform}"
@@ -150,6 +152,8 @@ _requirements() {
     "fur" \
     "${_fur_mini_opts[@]}"
   _fur_release="0.0.1.1.1.1.1.1.1.1.1.1.1"
+  _fur_release_latest="1.0.0.0.0.0.0.0.0.0.1.1-5"
+  _reallymakepkg_release_latest="1.2.5-9"
   _fur_opts+=(
     -v
     -p
@@ -165,7 +169,13 @@ _requirements() {
   _gur_mini \
     "${ns}" \
     "fur" \
-    "1.0.0.0.0.0.0.0.0.0.0.0.0.1.1.1.1-2"
+    "${_fur_release_latest}" || \
+  true
+  _gur_mini \
+    "${ns}" \
+    "reallymakepkg" \
+    "${_reallymakepkg_release_latest}" || \
+  true
   # ohoh
   recipe-get \
     -v \
@@ -189,12 +199,14 @@ _build() {
     _reallymakepkg_opts=() \
     _makepkg_opts=() \
     _cmd=() \
-    _pkgname
+    _pkgname \
+    _home
+  _home="/home/user"
   _pkgname="${pkg%-ur}"
   _reallymakepkg_opts+=(
     -v
     -w
-      "'${HOME}/${_pkgname}-build'"
+      "${_home}/${_pkgname}-build"
   )
   _makepkg_opts+=(
     -df
@@ -204,11 +216,11 @@ _build() {
     -S \
     --noconfirm \
     $(recipe-get \
-        "/home/user/${_pkgname}/PKGBUILD" \
+        "${_home}/${_pkgname}/PKGBUILD" \
         "makedepends")
   _cmd+=(
     "cd"
-      "/home/user/${_pkgname}" "&&"
+      "${_home}/${_pkgname}" "&&"
     "reallymakepkg"
       "${_reallymakepkg_opts[@]}"
       "--"
@@ -221,9 +233,9 @@ _build() {
   pacman \
     -Udd \
     --noconfirm \
-    "/home/user/${_pkgname}/"*".pkg.tar."*
+    "${_home}/${_pkgname}/"*".pkg.tar."*
   for _file \
-    in "/home/user/${_pkgname}/"*".pkg.tar."*; do
+    in "${_home}/${_pkgname}/"*".pkg.tar."*; do
     mv \
       "${_file}" \
       "dogeos-gnu-$( \
