@@ -75,7 +75,7 @@ _gur_mini() {
     _file="$( \
       basename \
         "${_url}")"
-    _output_file="$(pwd)/${_file}"
+    _output_file="${PWD}/${_file}"
     _gl_dl_retrieve \
       "${_url}"
   done
